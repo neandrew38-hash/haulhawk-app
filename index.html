@@ -10,8 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#f4f2ec">
-<!-- Paddle Billing checkout (https://developer.paddle.com/paddlejs/overview) -->
-<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<!-- Checkout: Lemon Squeezy hosted checkout links (settings at the top of the page script) -->
 <style>
   :root{
     --bg:#f4f2ec; --bg2:#ebe8df; --card:#faf9f5; --line:#dcd7cb; --line2:#e6e1d6;
@@ -310,9 +309,9 @@
     <input id="tgUser" placeholder="@yourname" autocomplete="off">
     <small>So we can switch on your access right after payment. Find it in Telegram → Settings. No username? Open this page from HaulHawk in Telegram: More → Subscription.</small>
   </div>
-  <p style="text-align:center;color:var(--text3);font-size:13.5px;margin:22px 0 0">Prices in USD and include VAT / sales tax - the price you see is the price you pay.<br>Plans renew automatically - cancel any time. <b style="color:var(--text2)">14-day money-back guarantee.</b> By subscribing you agree to our <a href="terms.html" style="color:var(--accent)">Terms</a> and <a href="refund.html" style="color:var(--accent)">Refund Policy</a>.<br>Orders are processed by Paddle.com, our Merchant of Record.</p>
-  <div class="payrow">Secure checkout by Paddle
-    <span class="paypill">Apple Pay</span><span class="paypill">Google Pay</span><span class="paypill">Visa</span><span class="paypill">Mastercard</span><span class="paypill">PayPal</span>
+  <p style="text-align:center;color:var(--text3);font-size:13.5px;margin:22px 0 0">Prices in USD and include VAT / sales tax - the price you see is the price you pay.<br>Plans renew automatically - cancel any time. <b style="color:var(--text2)">14-day money-back guarantee.</b> By subscribing you agree to our <a href="terms.html" style="color:var(--accent)">Terms</a> and <a href="refund.html" style="color:var(--accent)">Refund Policy</a>.<br>Orders are processed by Lemon Squeezy, our Merchant of Record.</p>
+  <div class="payrow">Secure checkout by Lemon Squeezy
+    <span class="paypill">Visa</span><span class="paypill">Mastercard</span><span class="paypill">+ other methods at checkout</span>
   </div>
 </div></section>
 
@@ -322,10 +321,10 @@
     <details><summary>Is there a free trial?</summary><p>Yes - every new account gets 5 days free with all features. Just open HaulHawk in Telegram.</p></details>
     <details><summary>Which load boards does it watch?</summary><p>The major car-hauling load boards used by US auto-transport dispatchers. You choose which ones each search uses.</p></details>
     <details><summary>Do I need to install anything?</summary><p>No. HaulHawk works inside Telegram on iPhone, Android and desktop.</p></details>
-    <details><summary>Does the plan renew automatically?</summary><p>Yes, at the end of each period, so your alerts never stop. Cancel any time from the receipt email - you keep access until the period ends.</p></details>
-    <details><summary>Can I get a refund?</summary><p>Yes - there is a 14-day money-back guarantee. Request it at paddle.net or email omvstudio.dev@gmail.com. See our <a href="refund.html" style="color:var(--accent)">Refund Policy</a>.</p></details>
-    <details><summary>Who do I contact for support?</summary><p>Write to omvstudio.dev@gmail.com or use Contact us inside HaulHawk. Payment and invoice questions are also handled by Paddle at paddle.net.</p></details>
-    <details><summary>How do I pay?</summary><p>Apple Pay, Google Pay, Visa, Mastercard or PayPal through Paddle, our payment partner. Prices already include taxes; Paddle issues the invoice.</p></details>
+    <details><summary>Does the plan renew automatically?</summary><p>Yes, at the end of each period, so your alerts never stop. Cancel any time - write to omvstudio.dev@gmail.com and we cancel it the same day. You keep access until the period ends.</p></details>
+    <details><summary>Can I get a refund?</summary><p>Yes - there is a 14-day money-back guarantee. Email omvstudio.dev@gmail.com or reply to your receipt email. See our <a href="refund.html" style="color:var(--accent)">Refund Policy</a>.</p></details>
+    <details><summary>Who do I contact for support?</summary><p>Write to omvstudio.dev@gmail.com or use Contact us inside HaulHawk. Your orders and receipts are also at app.lemonsqueezy.com/my-orders (log in with the email you paid with).</p></details>
+    <details><summary>How do I pay?</summary><p>By card or another method offered at checkout, through Lemon Squeezy, our payment partner and Merchant of Record. Prices already include taxes; Lemon Squeezy issues the receipt.</p></details>
   </div>
 </div></section>
 
@@ -333,7 +332,7 @@
 
 </div>
 <footer><div class="wrap">
-  <div>© <span id="yr"></span> HaulHawk · operated by OMV Studio, Poland</div>
+  <div>© <span id="yr"></span> HaulHawk · operated by OMV Studio, Ukraine</div>
   <div><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="refund.html">Refunds</a><a href="mailto:omvstudio.dev@gmail.com">omvstudio.dev@gmail.com</a><a href="#" id="contactLink" target="_blank" rel="noopener">Telegram</a></div>
 </div></footer>
 
@@ -342,18 +341,17 @@
 
 <script>
 /* ================= SETTINGS - fill these in =================
-   Paddle sandbox: sandbox-vendors.paddle.com
-   1. Developer tools → Authentication → create a CLIENT-SIDE token (starts with "test_") → PADDLE_TOKEN
-   2. Catalog → Products → add "HaulHawk" with 4 prices (recurring every 1 / 3 / 6 / 12 months) → copy each "pri_..." id
-   3. Checkout → Checkout settings → Default payment link → the address of this site
-   For real payments later: ENVIRONMENT = "production" and the live token + live price ids. */
-const ENVIRONMENT  = "sandbox";
-const PADDLE_TOKEN = "test_f6757a843db177d85bdc3061b57";   // sandbox client-side token "HaulHawk website"
-const PRICE_IDS = {                   // e.g. "pri_01h..."
-  m1:  "pri_01m44ca03bp56y5kpqqz08k16a",   // $25 every month (tax included)
-  m3:  "pri_01m496f2rgv340cy3b2y6x2n9v",   // $69 every 3 months
-  m6:  "pri_01m496gyzrxa2gpdj0agwn35cw",   // $129 every 6 months
-  m12: "pri_01m496dm11xv7m0xftqkjhxcxc",   // $249 every year
+   Lemon Squeezy (app.lemonsqueezy.com):
+   1. Products → "HaulHawk" subscription with 4 variants (every 1 / 3 / 6 / 12 months)
+   2. each variant → Share → copy its checkout link (https://<store>.lemonsqueezy.com/checkout/buy/<id>) → CHECKOUT_URLS
+   The site adds the buyer's Telegram account to the link (checkout[custom][...]), so the bot knows whose payment it is.
+   TEST_MODE = true shows the "test mode" bar (use with Lemon Squeezy test-mode links). */
+const TEST_MODE = false;
+const CHECKOUT_URLS = {               // e.g. "https://haulhawk.lemonsqueezy.com/checkout/buy/xxxxxxxx-...."
+  m1:  "",   // $25 every month (tax included)
+  m3:  "",   // $69 every 3 months
+  m6:  "",   // $129 every 6 months
+  m12: "",   // $249 every year
 };
 const BOT_USERNAME = "central0217bot";
 /* ============================================================ */
@@ -402,40 +400,26 @@ document.getElementById("plans").innerHTML = PLANS.map(p => {
 function modal(title, html) { document.getElementById("mTitle").textContent = title; document.getElementById("mText").innerHTML = html; document.getElementById("modal").classList.add("show"); }
 function closeModal() { document.getElementById("modal").classList.remove("show"); }
 
-let paddleReady = false;
-try {
-  if (window.Paddle && PADDLE_TOKEN) {
-    if (ENVIRONMENT === "sandbox") { Paddle.Environment.set("sandbox"); document.getElementById("demoBar").style.display = ""; }
-    Paddle.Initialize({
-      token: PADDLE_TOKEN,
-      eventCallback: ev => {
-        if (ev.name === "checkout.completed") {
-          Paddle.Checkout.close();
-          modal("You're in! 🎉", "Payment received" + (ENVIRONMENT === "sandbox" ? " (test mode - nothing was charged)" : "") + ". Your HaulHawk access will be switched on shortly. Open HaulHawk in Telegram: <a href='" + botLink + "' target='_blank' rel='noopener' style='color:var(--accent)'>@" + BOT_USERNAME + "</a>");
-        }
-      },
-    });
-    paddleReady = true;
-  }
-} catch (e) { console.error("Paddle init:", e); }
+if (TEST_MODE) document.getElementById("demoBar").style.display = "";
 
-// opened from the Mini App with a plan already chosen (?plan=m3): open that checkout straight away
-const PRESET_PLAN = PRICE_IDS[qs.get("plan")] ? qs.get("plan") : "";
-if (PRESET_PLAN) setTimeout(() => { const b = document.querySelector('[data-plan="' + PRESET_PLAN + '"]'); if (b && paddleReady) b.click(); }, 600);
+// opened from the Mini App with a plan already chosen (?plan=m3): go to that checkout straight away
+const PRESET_PLAN = CHECKOUT_URLS[qs.get("plan")] ? qs.get("plan") : "";
+if (PRESET_PLAN) setTimeout(() => { const b = document.querySelector('[data-plan="' + PRESET_PLAN + '"]'); if (b) b.click(); }, 600);
 
 document.getElementById("plans").addEventListener("click", e => {
   const b = e.target.closest("[data-plan]"); if (!b) return;
-  const priceId = PRICE_IDS[b.dataset.plan];
-  if (!paddleReady || !priceId) {
-    modal("Checkout isn't connected yet", "Add your Paddle <code>PADDLE_TOKEN</code> and the <code>PRICE_IDS</code> in the settings at the top of the page script. Until then no payment window opens.");
+  const link = CHECKOUT_URLS[b.dataset.plan];
+  if (!link) {
+    modal("Checkout isn't connected yet", "Payments are being set up. Please check back soon, or write to <a href='mailto:omvstudio.dev@gmail.com'>omvstudio.dev@gmail.com</a>.");
     return;
   }
   const tgUser = document.getElementById("tgUser").value.trim().replace(/^@/, "");
-  Paddle.Checkout.open({
-    items: [{ priceId, quantity: 1 }],
-    customData: { telegram: tgUser || null, telegram_id: TG_ID || null, plan: b.dataset.plan },
-    settings: { displayMode: "overlay", theme: "light", locale: "en" },
-  });
+  const u = new URL(link);
+  // custom data comes back to the bot with the payment (Lemon Squeezy: meta.custom_data)
+  if (TG_ID) u.searchParams.set("checkout[custom][telegram_id]", TG_ID);
+  if (tgUser) u.searchParams.set("checkout[custom][telegram]", tgUser);
+  u.searchParams.set("checkout[custom][plan]", b.dataset.plan);
+  location.href = u.toString();
 });
 
 /* ---- two pages in one file: studio home and the HaulHawk tab (#hh...) ---- */
