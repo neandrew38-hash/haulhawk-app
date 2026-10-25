@@ -347,13 +347,13 @@
    2. Catalog → Products → add "HaulHawk" with 4 prices (recurring every 1 / 3 / 6 / 12 months) → copy each "pri_..." id
    3. Checkout → Checkout settings → Default payment link → the address of this site
    For real payments later: ENVIRONMENT = "production" and the live token + live price ids. */
-const ENVIRONMENT  = "sandbox";
-const PADDLE_TOKEN = "test_f6757a843db177d85bdc3061b57";   // sandbox client-side token "HaulHawk website"
+const ENVIRONMENT  = "production";
+const PADDLE_TOKEN = "live_0cb3a8a27ee36272100627ac1a7";   // LIVE client-side token "HaulHawk website" (25.10.2026)
 const PRICE_IDS = {                   // e.g. "pri_01h..."
-  m1:  "pri_01m44ca03bp56y5kpqqz08k16a",   // $25 every month (tax included)
-  m3:  "pri_01m496f2rgv340cy3b2y6x2n9v",   // $69 every 3 months
-  m6:  "pri_01m496gyzrxa2gpdj0agwn35cw",   // $129 every 6 months
-  m12: "pri_01m496dm11xv7m0xftqkjhxcxc",   // $249 every year
+  m1:  "pri_01m5nevzb9z0fakn4p157t795n",   // $25 every month (tax included)
+  m3:  "pri_01m5newzbv80bbzhtd7a64s7ge",   // $69 every 3 months
+  m6:  "pri_01m5nexsa2x0w97mv34r7dt6cy",   // $129 every 6 months
+  m12: "pri_01m5neybcwhbexe8cncfn5amcy",   // $249 every year
 };
 const BOT_USERNAME = "central0217bot";
 /* ============================================================ */
