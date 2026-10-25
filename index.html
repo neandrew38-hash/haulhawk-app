@@ -157,6 +157,7 @@
   .plan .len{font-weight:500;font-size:18px}
   .plan .price{font-family:var(--mono);font-size:44px;font-weight:400;letter-spacing:-.04em;margin:18px 0 0;line-height:1}
   .plan .price small{font-size:15px;color:var(--text3);font-family:Outfit,sans-serif;letter-spacing:0}
+  .plan .price s{font-size:20px;color:var(--text3);margin-right:8px;letter-spacing:-.02em}
   .plan.best .price small,.plan.best .per{color:#a8abb2}
   .plan .per{color:var(--text3);font-size:14px;margin:8px 0 6px;min-height:22px}
   .plan .save{align-self:flex-start;font-family:var(--mono);font-size:12px;color:var(--ok);background:#e6f2e9;padding:3px 8px;min-height:24px}
@@ -359,7 +360,7 @@ const BOT_USERNAME = "central0217bot";
 /* ============================================================ */
 
 const PLANS = [
-  { id: "m1",  months: 1,  price: 1,   label: "1 month" },   // TEST 25.10 - back to 25 after the test
+  { id: "m1",  months: 1,  price: 1,   full: 25, label: "1 month" },   // TEST 25.10 - back to 25 after the test
   { id: "m3",  months: 3,  price: 69,  label: "3 months" },
   { id: "m6",  months: 6,  price: 129, label: "6 months", best: true },
   { id: "m12", months: 12, price: 249, label: "12 months" },
@@ -384,14 +385,14 @@ const botLink = "https://t.me/" + BOT_USERNAME;
 document.getElementById("trialBtn").href = botLink;
 document.getElementById("contactLink").href = botLink + "?start=contact";
 
-const base = PLANS[0].price;
+const base = PLANS[0].full || PLANS[0].price;   // real 1-month price (the test $1 does not count)
 document.getElementById("plans").innerHTML = PLANS.map(p => {
   const perMonth = p.price / p.months;
   const save = Math.round((1 - perMonth / base) * 100);
   return `<div class="plan${p.best ? " best" : ""}">
     ${p.best ? '<span class="badge">Most popular</span>' : ""}
     <div class="len">${p.label}</div>
-    <div class="price">$${p.price}<small>${p.months > 1 ? " / " + p.months + " mo" : " / mo"}</small></div>
+    <div class="price">${p.months > 1 ? "<s>$" + base * p.months + "</s>" : ""}$${p.price}<small>${p.months > 1 ? " / " + p.months + " mo" : " / mo"}</small></div>
     <div class="per">${p.months > 1 ? "$" + perMonth.toFixed(2) + " per month" : "&nbsp;"}</div>
     <span class="save${save > 0 ? "" : " none"}">${save > 0 ? "Save " + save + "%" : ""}</span>
     <ul>${FEATURES.map(f => "<li>" + f + "</li>").join("")}</ul>
